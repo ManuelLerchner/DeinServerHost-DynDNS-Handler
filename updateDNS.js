@@ -18,6 +18,8 @@ const options = {
     },
 };
 
+
+
 function updateDNS(newIP) {
     options.path = `/store/dyndns/?ipaddr=${newIP},&domain=manuellerchner.de&wildcard=0`;
     https
