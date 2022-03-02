@@ -1,0 +1,29 @@
+user="test"
+
+password="test"
+
+
+
+[Unit]
+
+Description=DynDNS-Service DeinServerHost.de
+
+After=network.target
+
+
+
+[Service]
+
+WorkingDirectory=/home/pi/DynDNS-Handler
+
+ExecStart=/usr/bin/node app.js
+
+Restart=on-failure
+
+User=pi
+
+
+
+[Install]
+
+WantedBy=multi-user.target
