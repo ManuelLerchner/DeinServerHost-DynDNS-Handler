@@ -1,40 +1,18 @@
-const http = require("http");
-const https = require("https");
+const { updateDNS } = require("./updateDNS");
+const { getIP } = require("./getIP");
 
-const dotenv = require("dotenv");
+var oldIP = "";
 
-dotenv.config({ path: "./config/.env" });
+setInterval(() => {
+    getIP((ip) => {
+        if (ip != oldIP) {
+            oldIP = ip;
 
-const authData = Buffer.from(
-    process.env.username + ":" + process.env.password
-).toString("base64");
+            updateDNS(ip);
 
-var updateDNS = (publicIP) => {
-    const options = {
-        hostname: "deinserverhost.de",
-        port: 443,
-        path: `/store/dyndns/?ipaddr=${publicIP},&domain=manuellerchner.de&wildcard=0`,
-        method: "GET",
-
-        headers: {
-            Authorization: "Basic " + authData,
-        },
-    };
-
-    const req = https.request(options, (res) => {
-        console.log(options);
-
-        res.on("data", (d) => {
-            process.stdout.write(d);
-            console.log("New ip: " + publicIP);
-        });
+            console.log("Updated to: " + ip);
+        }
     });
+}, 60 * 1000);
 
-    req.end();
-};
-
-http.get({ host: "api.ipify.org", port: 80, path: "/" }, function (resp) {
-    resp.on("data", function (ip) {
-        updateDNS(ip);
-    });
-});
+// a function that opens the browser
