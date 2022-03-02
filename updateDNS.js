@@ -1,13 +1,12 @@
 const https = require("https");
 const dotenv = require("dotenv");
+const moment = require("moment");
 
 dotenv.config({ path: "./config/.env" });
 
 const authData = Buffer.from(
     process.env.username + ":" + process.env.password
 ).toString("base64");
-
-console.log(process.env.user + "-----" + process.env.password);
 
 const options = {
     hostname: "deinserverhost.de",
@@ -23,11 +22,14 @@ function updateDNS(newIP) {
     options.path = `/store/dyndns/?ipaddr=${newIP},&domain=manuellerchner.de&wildcard=0`;
     https
         .request(options, (res) => {
-            console.log(options);
-
-            res.on("data", (d) => {
-                process.stdout.write(d);
-                console.log("New ip: " + newIP);
+            res.on("data", (resp) => {
+                console.log(
+                    moment().utc().format("Y-M-D H:M:S") +
+                        "\t\t" +
+                        resp +
+                        ", Updated to: " +
+                        newIP
+                );
             });
         })
         .end();
