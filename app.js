@@ -5,7 +5,7 @@ var oldIP = "";
 
 setInterval(() => {
     getIP((ip) => {
-        if (ip != oldIP) {
+        if ("" + oldIP !== "" + ip) {
             oldIP = ip;
             updateDNS(ip);
         }
