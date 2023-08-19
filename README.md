@@ -1,5 +1,3 @@
-# DynDNS-Handler 
+# DeinServerHost.de Dynamic DNS-Handler 
 
-A Small Node Script that updates the public ip of my website. 
-
-The website is hosted on https://manuellerchner.de/
+A Small Node Script to update the Dynamic DNS of DeinServerHost.de
