@@ -5,7 +5,7 @@ const moment = require("moment");
 dotenv.config({ path: "./config/.env" });
 
 const authData = Buffer.from(
-    process.env.username + ":" + process.env.password
+    process.env.email + ":" + process.env.password
 ).toString("base64");
 
 const options = {
